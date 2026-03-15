@@ -9,7 +9,7 @@ export default function Login() {
 
   const handleLogin = async () => {
 
-    const res = await fetch("http://YOUR_IP:5000/api/auth/login", {
+    const res = await fetch("http://https://mentorship-platform-server-4dnw.onrender.com/api/auth/login", {
 
       method: "POST",
 

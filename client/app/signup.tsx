@@ -10,7 +10,7 @@ export default function Signup() {
 
   const handleSignup = async () => {
 
-    const res = await fetch("http://YOUR_IP:5000/api/auth/signup", {
+    const res = await fetch("http://https://mentorship-platform-server-4dnw.onrender.com/api/auth/signup", {
 
       method: "POST",
 
