@@ -1,35 +1,31 @@
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from "react-native";
 import { useState } from "react";
 import { router } from "expo-router";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function MentorSignup() {
-
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [expertise, setExpertise] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleSignup = async () => {
+    const BASE_URL = __DEV__
+      ? process.env.EXPO_PUBLIC_DEBUG_SERVER_URL
+      : process.env.EXPO_PUBLIC_SERVER_URL;
 
-  const BASE_URL = __DEV__
-    ? process.env.EXPO_PUBLIC_DEBUG_SERVER_URL
-    : process.env.EXPO_PUBLIC_SERVER_URL;
-
-    const res = await fetch(
-      `${BASE_URL}/api/mentors/signup`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          name,
-          email,
-          password,
-          expertise
-        })
-      }
-    );
+    const res = await fetch(`${BASE_URL}/api/mentors/signup`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name,
+        email: email.toLowerCase(),
+        password,
+        expertise,
+      }),
+    });
 
     const data = await res.json();
 
@@ -37,84 +33,157 @@ export default function MentorSignup() {
       alert("Mentor account created");
       router.push("/mentor/loginPage");
     } else {
-      alert(data.message);
+      alert(data.message || "Signup failed");
     }
-
   };
 
   return (
     <View style={styles.container}>
 
-      <Text style={styles.title}>Mentor Sign Up</Text>
-
-      <TextInput
-        placeholder="Name"
-        style={styles.input}
-        onChangeText={setName}
+      {/* 🔙 Back */}
+      <Ionicons
+        name="arrow-back"
+        size={24}
+        style={styles.backIcon}
+        onPress={() => router.back()}
       />
 
-      <TextInput
-        placeholder="Email"
-        style={styles.input}
-        onChangeText={setEmail}
-      />
+      {/* 👋 Header */}
+      <Text style={styles.title}>Become a Mentor</Text>
+      <Text style={styles.subtitle}>
+        Share your knowledge and guide students
+      </Text>
 
-      <TextInput
-        placeholder="Expertise (AI, Web Dev...)"
-        style={styles.input}
-        onChangeText={setExpertise}
-      />
+      {/* 👤 Name */}
+      <Text style={styles.label}>Name</Text>
+      <View style={styles.inputContainer}>
+        <Ionicons name="person-outline" size={20} color="#9CA3AF" />
+        <TextInput
+          placeholder="Your name"
+          style={styles.input}
+          onChangeText={setName}
+        />
+      </View>
 
-      <TextInput
-        placeholder="Password"
-        secureTextEntry
-        style={styles.input}
-        onChangeText={setPassword}
-      />
+      {/* 📧 Email */}
+      <Text style={styles.label}>Email</Text>
+      <View style={styles.inputContainer}>
+        <Ionicons name="mail-outline" size={20} color="#9CA3AF" />
+        <TextInput
+          placeholder="your@email.com"
+          style={styles.input}
+          onChangeText={setEmail}
+        />
+      </View>
 
-      <TouchableOpacity
-        style={styles.button}
-        onPress={handleSignup}
-      >
-        <Text style={styles.buttonText}>Sign Up</Text>
+      {/* 💡 Expertise */}
+      <Text style={styles.label}>Expertise</Text>
+      <View style={styles.inputContainer}>
+        <Ionicons name="school-outline" size={20} color="#9CA3AF" />
+        <TextInput
+          placeholder="AI, Web Dev, Data Science..."
+          style={styles.input}
+          onChangeText={setExpertise}
+        />
+      </View>
+
+      {/* 🔒 Password */}
+      <Text style={styles.label}>Password</Text>
+      <View style={styles.inputContainer}>
+        <Ionicons name="lock-closed-outline" size={20} color="#9CA3AF" />
+        <TextInput
+          placeholder="••••••••"
+          secureTextEntry
+          style={styles.input}
+          onChangeText={setPassword}
+        />
+        <Ionicons name="eye-outline" size={20} color="#9CA3AF" />
+      </View>
+
+      {/* 🟢 Button */}
+      <TouchableOpacity style={styles.button} onPress={handleSignup}>
+        <Text style={styles.buttonText}>Create Mentor Account</Text>
       </TouchableOpacity>
+
+      {/* Footer */}
+      <Text style={styles.footerText}>
+        Already a mentor?{" "}
+        <Text
+          style={styles.link}
+          onPress={() => router.push("/mentor/loginPage")}
+        >
+          Sign in
+        </Text>
+      </Text>
 
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-
   container: {
     flex: 1,
-    justifyContent: "center",
-    padding: 20
+    backgroundColor: "#F9FAFB",
+    padding: 20,
+    paddingTop: 60,
+  },
+
+  backIcon: {
+    marginBottom: 20,
   },
 
   title: {
     fontSize: 28,
     fontWeight: "bold",
-    marginBottom: 20
+    marginBottom: 5,
+  },
+
+  subtitle: {
+    color: "#6B7280",
+    marginBottom: 30,
+  },
+
+  label: {
+    marginBottom: 6,
+    fontWeight: "500",
+  },
+
+  inputContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#E5E7EB",
+    borderRadius: 12,
+    paddingHorizontal: 12,
+    marginBottom: 20,
+    height: 50,
   },
 
   input: {
-    borderWidth: 1,
-    borderColor: "#ccc",
-    padding: 10,
-    marginBottom: 15,
-    borderRadius: 8
+    flex: 1,
+    marginLeft: 10,
   },
 
   button: {
     backgroundColor: "#16A34A",
     padding: 15,
-    borderRadius: 8,
-    alignItems: "center"
+    borderRadius: 12,
+    alignItems: "center",
+    marginTop: 10,
   },
 
   buttonText: {
     color: "white",
-    fontWeight: "bold"
-  }
+    fontWeight: "bold",
+  },
 
+  footerText: {
+    textAlign: "center",
+    marginTop: 20,
+    color: "#6B7280",
+  },
+
+  link: {
+    color: "#16A34A",
+    fontWeight: "bold",
+  },
 });
