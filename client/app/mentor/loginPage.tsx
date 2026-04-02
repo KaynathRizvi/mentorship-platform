@@ -9,8 +9,12 @@ export default function MentorLogin() {
 
   const handleLogin = async () => {
 
+  const BASE_URL = __DEV__
+    ? process.env.EXPO_PUBLIC_DEBUG_SERVER_URL
+    : process.env.EXPO_PUBLIC_SERVER_URL;
+
     const res = await fetch(
-      "https://mentorship-platform-server-4dnw.onrender.com/api/mentors/login",
+      `${BASE_URL}/api/mentors/login`,
       {
         method: "POST",
         headers: {

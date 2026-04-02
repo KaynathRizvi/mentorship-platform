@@ -10,8 +10,13 @@ export default function Signup() {
 
   const handleSignup = async () => {
 
-    const res = await fetch("https://mentorship-platform-server-4dnw.onrender.com/api/auth/signup", {
+  const BASE_URL = __DEV__
+    ? process.env.EXPO_PUBLIC_DEBUG_SERVER_URL
+    : process.env.EXPO_PUBLIC_SERVER_URL;
 
+    const res = await fetch(
+    `${BASE_URL}/api/auth/signup`,
+    {
       method: "POST",
 
       headers: {
