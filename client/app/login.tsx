@@ -9,8 +9,8 @@ export default function Login() {
 
   const handleLogin = async () => {
     const BASE_URL = __DEV__
-    ? process.env.EXPO_PUBLIC_DEBUG_SERVER_URL
-    : process.env.EXPO_PUBLIC_SERVER_URL;
+    ? process.env.DEBUG_SERVER_URL
+    : process.env.SERVER_URL;
 
     const res = await fetch(
     `${BASE_URL}/api/auth/login`,
