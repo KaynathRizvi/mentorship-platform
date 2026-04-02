@@ -8,8 +8,13 @@ export default function Login() {
   const [password, setPassword] = useState("");
 
   const handleLogin = async () => {
+    const BASE_URL = __DEV__
+    ? process.env.EXPO_PUBLIC_DEBUG_SERVER_URL
+    : process.env.EXPO_PUBLIC_SERVER_URL;
 
-    const res = await fetch("https://mentorship-platform-server-4dnw.onrender.com/api/auth/login", {
+    const res = await fetch(
+    `${BASE_URL}/api/auth/login`,
+    {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
