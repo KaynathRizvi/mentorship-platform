@@ -4,6 +4,7 @@ require("dotenv").config();
 
 const connectDB = require("./config/db");
 
+const authRoutes = require("./routes/authRoutes");
 const mentorRoutes = require("./routes/mentorRoutes");
 const programRoutes = require("./routes/programRoutes");
 
@@ -18,6 +19,7 @@ app.get("/", (req, res) => {
   res.send("Mentorship Platform API Running");
 });
 
+app.use("/api/auth", authRoutes);
 app.use("/api/mentors", mentorRoutes);
 app.use("/api/programs", programRoutes);
 
