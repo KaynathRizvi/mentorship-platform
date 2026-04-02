@@ -4,26 +4,23 @@ require("dotenv").config();
 
 const connectDB = require("./config/db");
 
-// Import routes
-const authRoutes = require("./routes/authRoutes");
-
-connectDB();
+const mentorRoutes = require("./routes/mentorRoutes");
+const programRoutes = require("./routes/programRoutes");
 
 const app = express();
 
-// Middleware
+connectDB();
+
 app.use(cors());
 app.use(express.json());
 
-// Test route
 app.get("/", (req, res) => {
   res.send("Mentorship Platform API Running");
 });
 
-// Auth routes
-app.use("/api/auth", authRoutes);
+app.use("/api/mentors", mentorRoutes);
+app.use("/api/programs", programRoutes);
 
-// Port
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {

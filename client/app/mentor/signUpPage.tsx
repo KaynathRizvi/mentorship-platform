@@ -2,34 +2,36 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet } from "react-nativ
 import { useState } from "react";
 import { router } from "expo-router";
 
-export default function Signup() {
+export default function MentorSignup() {
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [expertise, setExpertise] = useState("");
 
   const handleSignup = async () => {
 
-    const res = await fetch("https://mentorship-platform-server-4dnw.onrender.com/api/auth/signup", {
-
-      method: "POST",
-
-      headers: {
-        "Content-Type": "application/json"
-      },
-
-      body: JSON.stringify({
-        name,
-        email,
-        password
-      })
-    });
+    const res = await fetch(
+      "https://mentorship-platform-server-4dnw.onrender.com/api/mentors/signup",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          password,
+          expertise
+        })
+      }
+    );
 
     const data = await res.json();
 
     if (res.ok) {
-      alert("Signup successful");
-      router.push("/login");
+      alert("Mentor account created");
+      router.push("/mentor/loginPage");
     } else {
       alert(data.message);
     }
@@ -37,10 +39,9 @@ export default function Signup() {
   };
 
   return (
-
     <View style={styles.container}>
 
-      <Text style={styles.title}>Sign Up</Text>
+      <Text style={styles.title}>Mentor Sign Up</Text>
 
       <TextInput
         placeholder="Name"
@@ -52,6 +53,12 @@ export default function Signup() {
         placeholder="Email"
         style={styles.input}
         onChangeText={setEmail}
+      />
+
+      <TextInput
+        placeholder="Expertise (AI, Web Dev...)"
+        style={styles.input}
+        onChangeText={setExpertise}
       />
 
       <TextInput
@@ -95,7 +102,7 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    backgroundColor: "#4F46E5",
+    backgroundColor: "#16A34A",
     padding: 15,
     borderRadius: 8,
     alignItems: "center"

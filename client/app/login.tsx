@@ -9,25 +9,24 @@ export default function Login() {
 
   const handleLogin = async () => {
 
-    const res = await fetch("http://https://mentorship-platform-server-4dnw.onrender.com/api/auth/login", {
-
+    const res = await fetch("https://mentorship-platform-server-4dnw.onrender.com/api/auth/login", {
       method: "POST",
-
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-
       body: JSON.stringify({
-        email,
-        password
-      })
-
+        email: email.toLowerCase(),
+        password,
+      }),
     });
 
-    const data = await res.json();
+const data = await res.json(); // ✅ only once
+
+console.log("STATUS:", res.status);
+console.log("DATA:", data);
 
     if (data.token) {
-      router.replace("/(tabs)");
+      router.replace("/homeScreen");
     } else {
       alert("Login failed");
     }

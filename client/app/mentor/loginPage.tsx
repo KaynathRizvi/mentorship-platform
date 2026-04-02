@@ -2,36 +2,33 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet } from "react-nativ
 import { useState } from "react";
 import { router } from "expo-router";
 
-export default function Signup() {
+export default function MentorLogin() {
 
-  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSignup = async () => {
+  const handleLogin = async () => {
 
-    const res = await fetch("https://mentorship-platform-server-4dnw.onrender.com/api/auth/signup", {
-
-      method: "POST",
-
-      headers: {
-        "Content-Type": "application/json"
-      },
-
-      body: JSON.stringify({
-        name,
-        email,
-        password
-      })
-    });
+    const res = await fetch(
+      "https://mentorship-platform-server-4dnw.onrender.com/api/mentors/login",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          email,
+          password
+        })
+      }
+    );
 
     const data = await res.json();
 
-    if (res.ok) {
-      alert("Signup successful");
-      router.push("/login");
+    if (data.token) {
+      router.replace("/mentor/dashboard");
     } else {
-      alert(data.message);
+      alert("Login failed");
     }
 
   };
@@ -40,13 +37,7 @@ export default function Signup() {
 
     <View style={styles.container}>
 
-      <Text style={styles.title}>Sign Up</Text>
-
-      <TextInput
-        placeholder="Name"
-        style={styles.input}
-        onChangeText={setName}
-      />
+      <Text style={styles.title}>Mentor Login</Text>
 
       <TextInput
         placeholder="Email"
@@ -63,12 +54,13 @@ export default function Signup() {
 
       <TouchableOpacity
         style={styles.button}
-        onPress={handleSignup}
+        onPress={handleLogin}
       >
-        <Text style={styles.buttonText}>Sign Up</Text>
+        <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
 
     </View>
+
   );
 }
 
@@ -95,7 +87,7 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    backgroundColor: "#4F46E5",
+    backgroundColor: "#2563EB",
     padding: 15,
     borderRadius: 8,
     alignItems: "center"
