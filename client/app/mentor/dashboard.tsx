@@ -58,10 +58,21 @@ export default function MentorDashboard() {
         </View>
       </View>
 
-      {/* ➕ Button */}
-      <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>+ Create New Program</Text>
-      </TouchableOpacity>
+      {/* ➕ Actions */}
+    <View style={styles.buttonContainer}>
+
+        <TouchableOpacity style={styles.button}>
+            <Text style={styles.buttonText}>+ Create New Program</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+            style={styles.profileButton}
+            onPress={() => router.push("/mentor/profile")}
+            >
+            <Text style={styles.profileButtonText}>View Profile</Text>
+        </TouchableOpacity>
+
+    </View>
 
     </ScrollView>
   );
@@ -162,4 +173,22 @@ const styles = StyleSheet.create({
     color: "white",
     fontWeight: "bold",
   },
+
+  buttonContainer: {
+  marginTop: 10,
+  gap: 10,
+},
+
+profileButton: {
+  backgroundColor: "#E5E7EB",
+  padding: 15,
+  borderRadius: 10,
+  alignItems: "center",
+},
+
+profileButtonText: {
+  color: "#111827",
+  fontWeight: "bold",
+},
+
 });

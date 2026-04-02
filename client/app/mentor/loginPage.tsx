@@ -80,12 +80,12 @@ export default function MentorLogin() {
 
       {/* Footer */}
       <Text style={styles.footerText}>
-        Not a mentor?{" "}
+        Don't have an account?{" "}
         <Text
           style={styles.link}
-          onPress={() => router.push("/login")}
+          onPress={() => router.push("/mentor/signUpPage")}
         >
-          Login as student
+          Create new one
         </Text>
       </Text>
 
