@@ -1,23 +1,18 @@
 const mongoose = require("mongoose");
 
 const mentorSchema = new mongoose.Schema({
-
   name: String,
-
-  email: {
-    type: String,
-    unique: true
-  },
-
+  email: String,
   password: String,
-
   expertise: String,
-
   rating: {
     type: Number,
-    default: 5
-  }
-
+    default: 4.5,
+  },
+  isFeatured: {
+    type: Boolean,
+    default: true,
+  },
 });
 
 module.exports = mongoose.model("Mentor", mentorSchema);
