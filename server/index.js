@@ -25,6 +25,21 @@ app.use("/api/programs", programRoutes);
 
 const PORT = process.env.PORT || 5000;
 
+// 🔥 SOCKET LOGIC
+io.on("connection", (socket) => {
+  console.log("User connected:", socket.id);
+
+  socket.on("sendMessage", (data) => {
+    console.log("Message:", data);
+
+    // send to all users
+    io.emit("receiveMessage", data);
+  });
+
+  socket.on("disconnect", () => {
+    console.log("User disconnected:", socket.id);
+  });
+});
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
