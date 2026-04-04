@@ -78,3 +78,53 @@ export default function AssignmentGenerator() {
     </ScrollView>
   );
 }
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: "#F9FAFB",
+  },
+
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 20,
+  },
+
+  input: {
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 10,
+    padding: 12,
+    marginBottom: 15,
+  },
+
+  button: {
+    backgroundColor: "#2563EB",
+    padding: 15,
+    borderRadius: 10,
+    alignItems: "center",
+  },
+
+  buttonText: {
+    color: "white",
+    fontWeight: "bold",
+  },
+
+  outputContainer: {
+    marginTop: 20,
+    backgroundColor: "white",
+    padding: 15,
+    borderRadius: 10,
+  },
+
+  outputTitle: {
+    fontWeight: "bold",
+    marginBottom: 10,
+  },
+
+  outputText: {
+    color: "#374151",
+    lineHeight: 20,
+  },
+});
